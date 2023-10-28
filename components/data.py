@@ -29,3 +29,9 @@ def data_select(df,area):
 def data_filter_date(data_sorted, start, end):
     data = data_sorted[(data_sorted['DATE OCC'] > start) & (data_sorted['DATE OCC'] < end)]
     return data
+
+#Caches constant dataframes to reduce runtime
+@st.cache_data
+def data_cache(df,location):
+    data_frame = data_select(df, location)[0]
+    return data_frame

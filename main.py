@@ -40,11 +40,17 @@ with st.sidebar:
 data_sorted = data_select(df,area)[0] 
 scale = data_select(df,area)[1]
 
-data_hollywood = data_select(df,"Hollywood")[0]
-scale_hollywood = data_select(df,"Hollywood")[1]
 
+#Caches data for effiecny  filters it through the data selection and returns the data frame
+hollywood_df = data_cache(df, "Hollywood")
+data_hollywood = data_select(hollywood_df,"Hollywood")[0]
+scale_hollywood = data_select(hollywood_df,"Hollywood")[1]
+
+
+centeral_df = data_cache(df, "Central")
 data_central = data_select(df,"Central")[0]
 scale_central = data_select(df,"Central")[1]
+
 
 #Calls the function from coords.py to use as variables for the map
 lat = coords(area, data_sorted,"LAT",34.052235)

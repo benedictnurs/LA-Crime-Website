@@ -11,3 +11,21 @@ def data(rows):
                              parse_dates=["DATE OCC"]   
   )
     return crime_data
+
+
+#If area is All then returns 80K random rows if not return the specific area only.
+def data_select(df,area):
+    if area != "All":
+        data_sorted = (df.loc[df['AREA NAME'] == area])
+        scale = 5.5
+        return data_sorted , scale
+    else:
+        data_sorted = df.sample(80000)
+        scale = 12
+        return data_sorted , scale
+    
+    
+#Filters the data by dates in order to plot within the range also edits the previous variable of data_sorted
+def data_filter_date(data_sorted, start, end):
+    data = data_sorted[(data_sorted['DATE OCC'] > start) & (data_sorted['DATE OCC'] < end)]
+    return data

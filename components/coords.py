@@ -1,19 +1,14 @@
-def latitude(area, data_sorted):
+#Plots the coords needed to map
+def latitude(area, data_sorted, position, default):
     if area == "All":
-        areaLat = 34.052235
+        areaLat = default
     else:
         try:
-            areaLat = data_sorted["LAT"].iloc[0]
+            areaLat = data_sorted[position].iloc[0]
         except:
             return areaLat
     return areaLat
 
-def longitude(area, data_sorted):
-    if area == "All":
-        areaLon = -118.243683
-    else:
-        try:
-            areaLon = data_sorted["LON"].iloc[0]
-        except:
-            return areaLon
-    return areaLon
+
+
+

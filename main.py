@@ -12,6 +12,7 @@ from components.date import *
 from components.data import *
 from components.elevation import *
 
+
 #Configs the Pages
 st.set_page_config(layout="wide", page_title="LA Crime Data")
 
@@ -42,11 +43,13 @@ scale = data_select(df,area)[1]
 
 
 #Caches data for effiecny  filters it through the data selection and returns the data frame
+
+#Data for Hollywood
 hollywood_df = data_cache(df, "Hollywood")
 data_hollywood = data_select(hollywood_df,"Hollywood")[0]
 scale_hollywood = data_select(hollywood_df,"Hollywood")[1]
 
-
+#Data for Central LA
 centeral_df = data_cache(df, "Central")
 data_central = data_select(df,"Central")[0]
 scale_central = data_select(df,"Central")[1]
@@ -62,11 +65,10 @@ lon_hollywood = coords("Hollywood", data_hollywood,"LON",-118.243683)
 lat_central = coords("Central", data_central,"LAT",34.052235)
 lon_central = coords("Central", data_central,"LON",-118.243683)
 
+
 #Filters the data by dates in order to plot within the range also edits the previous variable of data_sorted
 data_sorted = data_filter_date(data_sorted, start, end)
-
 data_hollywood = data_filter_date(data_hollywood, start, end)
-
 data_central = data_filter_date(data_central, start, end)
 
 
@@ -76,6 +78,7 @@ result_hollywood = elevation(data_hollywood)
 result_central = elevation(data_central)
 
 
+#Adds columns for multiple maps
 col1, col2, col3 = st.columns(3)
 
 with col1:

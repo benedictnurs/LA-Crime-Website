@@ -4,6 +4,8 @@ import pandas as pd
 import numpy as np
 import pydeck as pdk
 import datetime as dt
+import altair as alt
+
 
 #IMPORT FUNCTIONS FROM OTHER FILES
 from components.coords import *
@@ -11,6 +13,7 @@ from components.selectBar import *
 from components.date import *
 from components.data import *
 from components.elevation import *
+from components.charts import *
 
 
 #Configs the Pages
@@ -25,16 +28,14 @@ st.title("Crime Data in Los Angeles")
 df = data(815882)
 
 
-#Creates the sidebar for date and select bar
-with st.sidebar:
-    st.subheader("Filters")
-    #Creates the select bar which returns area
+#Creates a column to choose area and date range 
+col1, col2, col3 = st.columns(3)
+with col1:
     area = selectBar()
+with col2:
     start = str(date("Start", 2020, 1, 1))
+with col3:
     end = str(date("End", 2023, 10, 12))
-
-
-#Creates a subheader to show which area you selected 
 
 
 #If area is All then returns 80K rows if not return the specific area only.
@@ -79,8 +80,6 @@ result_central = elevation(data_central)
 
 
 #Adds columns for multiple maps
-col1, col2, col3 = st.columns(3)
-
 with col1:
     st.subheader(area)
     map1 = hex_map(lat, lon, data_sorted, scale, result)
@@ -92,3 +91,9 @@ with col2:
 with col3:
     st.subheader("Central LA")
     map3 = hex_map(lat_central, lon_central, data_central, scale_central, result_central)
+
+
+#Gets and plots age and gender of victims
+victim = victim_filter(df)
+chart = victim_chart(victim)
+st.altair_chart(chart,use_container_width=True)

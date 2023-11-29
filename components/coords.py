@@ -13,8 +13,6 @@ def coords(area, data_sorted, position, default):
     return areaLat
 
 
-
-
 #Creates the map
 def hex_map(lat, lon, data_sorted, scale, result):
     st.pydeck_chart(pdk.Deck(

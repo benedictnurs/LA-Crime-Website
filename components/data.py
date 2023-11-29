@@ -7,7 +7,7 @@ import pandas as pd
 def data(rows):
     crime_data = pd.read_csv("Crime.csv",
                              nrows=rows, 
-                             usecols= ["AREA NAME", "LAT", "LON","DATE OCC"],
+                             usecols= ["AREA NAME", "LAT", "LON","DATE OCC","Vict Age","Vict Sex"],
                              parse_dates=["DATE OCC"]   
   )
     return crime_data
@@ -15,7 +15,7 @@ def data(rows):
 
 #If area is All then returns 80K random rows if not return the specific area only.
 def data_select(df,area):
-    if area != "All":
+    if area != "All":   
         data_sorted = (df.loc[df['AREA NAME'] == area])
         scale = 5.5
         return data_sorted , scale
@@ -35,3 +35,10 @@ def data_filter_date(data_sorted, start, end):
 def data_cache(df,location):
     data_frame = data_select(df, location)[0]
     return data_frame
+
+#Caches and gets the victim data only gets age and gender
+@st.cache_resource
+def victim_filter(df): 
+    df = df[["Vict Sex","Vict Age"]]
+    victim = df[(df['Vict Sex'].isin(['M', 'F'])) & (df['Vict Age'] > 1)]
+    return victim
